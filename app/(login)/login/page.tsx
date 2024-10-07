@@ -1,11 +1,14 @@
-import { signup } from "./signup-action";
+"use client";
+
+import { login } from "./signin-action";
+
 export default async function Page() {
     return (
         <>
-            <h1>Create an account</h1>
+            <h1>Sign in</h1>
             <form
-                action={async (formData) => {
-                    await signup(formData);
+                action={(formData) => {
+                    login(formData);
                 }}
             >
                 <label htmlFor="username">Username</label>

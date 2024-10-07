@@ -11,18 +11,14 @@ export async function signup(formData: FormData): Promise<ActionResult> {
     const username = formData.get("username");
     // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
     // keep in mind some database (e.g. mysql) are case insensitive
-    if (
-        typeof username !== "string" ||
-        username.length < 3 ||
-        username.length > 31 ||
-        !/^[a-z0-9_-]+$/.test(username)
-    ) {
+    if (typeof username !== "string") {
         return {
             error: "Invalid username",
         };
     }
     const password = formData.get("password");
-    if (typeof password !== "string" || password.length < 6 || password.length > 255) {
+    console.log(password, typeof password);
+    if (typeof password !== "string") {
         return {
             error: "Invalid password",
         };
