@@ -1,2 +1,6 @@
 .next
 node_modules
+.*.local
+.vscode
+.DS_Store
+.*.production
