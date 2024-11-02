@@ -1,7 +1,7 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 
 import pg from "pg";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/node-postgres";
 
 const pool = new pg.Pool({
@@ -28,6 +28,25 @@ export const sessionTable = pgTable("session", {
         withTimezone: true,
         mode: "date",
     }).notNull(),
+});
+
+export const tasksTable = pgTable("tasks", {
+    id: text("id").primaryKey().default("gen_random_uuid()"),
+    userId: text("user_id")
+        .notNull()
+        .references(() => userTable.id),
+    title: text("title").notNull(),
+    amount: integer("amount").notNull(),
+    amountType: text("amount_type").notNull(),
+    imgUrl: text("img_url"),
+    dueDate: timestamp("due_date", {
+        withTimezone: true,
+        mode: "date",
+    }).notNull(),
+    completedAt: timestamp("completed_at", {
+        withTimezone: true,
+        mode: "date",
+    }),
 });
 
 export const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);

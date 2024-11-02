@@ -7,6 +7,7 @@ export default async function Page() {
         <>
             <h1>Sign in</h1>
             <form
+                data-testid="login-form"
                 action={(formData) => {
                     login(formData);
                 }}
@@ -17,7 +18,7 @@ export default async function Page() {
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" />
                 <br />
-                <button>Continue</button>
+                <button type="submit">Continue</button>
             </form>
         </>
     );

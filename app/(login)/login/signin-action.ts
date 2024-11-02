@@ -24,9 +24,7 @@ export async function login(formData: FormData): Promise<ActionResult> {
     const existingUser = await db.query.userTable.findFirst({
         where: eq(userTable.username, username),
     });
-    console.log(existingUser);
     if (!existingUser) {
-        console.error("Not existing user");
         return {
             error: "Incorrect username or password",
         };
@@ -39,7 +37,6 @@ export async function login(formData: FormData): Promise<ActionResult> {
         parallelism: 1,
     });
     if (!validPassword) {
-        console.error("Incorrect password");
         return {
             error: "Incorrect username or password",
         };
