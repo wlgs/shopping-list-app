@@ -47,6 +47,12 @@ export const tasksTable = pgTable("tasks", {
         withTimezone: true,
         mode: "date",
     }),
+    createdAt: timestamp("created_at", {
+        withTimezone: true,
+        mode: "date",
+    })
+        .defaultNow()
+        .notNull(),
 });
 
 export const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);

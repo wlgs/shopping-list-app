@@ -23,7 +23,7 @@ export default async function Page() {
     if (!user) {
         redirect("/login");
     }
-    const tasks = await getTasks();
+    const tasks = (await getTasks()).sort((taskA, taskB) => taskA.createdAt.getTime() - taskB.createdAt.getTime());
     return (
         <main className="container mx-auto">
             <ul className="flex flex-col gap-1">
@@ -32,7 +32,7 @@ export default async function Page() {
                         key={task.id}
                         className={cn(
                             "  bg-secondary rounded-md flex flex-row gap-2 px-2 py-1 items-baseline",
-                            task.completedAt && "line-through bg-green-400 opacity-80"
+                            task.completedAt && "line-through bg-green-400 opacity-40"
                         )}
                     >
                         <h2 className="font-bold text-xl">{task.title}</h2>

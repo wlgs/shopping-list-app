@@ -15,6 +15,13 @@
       "when": 1730687811142,
       "tag": "0001_organic_tyrannus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1730756046679,
+      "tag": "0002_stale_zaran",
+      "breakpoints": true
     }
   ]
 }
