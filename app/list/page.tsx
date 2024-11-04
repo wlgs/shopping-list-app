@@ -1,6 +1,7 @@
 import { validateRequest } from "@/auth/validate-request";
 import getTasks from "./actions/getTasks";
 import { redirect } from "next/navigation";
+import DeleteTaskButton from "./deleteTaskButton";
 
 export default async function Page() {
     const { user } = await validateRequest();
@@ -20,6 +21,7 @@ export default async function Page() {
                         </p>
                         <p>Due: {new Date(task.dueDate).toISOString()}</p>
                         {task.imgUrl && <img src={task.imgUrl} alt={task.title} />}
+                        <DeleteTaskButton taskId={task.id} />
                     </li>
                 ))}
             </ul>

@@ -10,7 +10,11 @@ export default async function getTasks() {
     if (!user) {
         return [];
     }
-    const tasks = await db.select().from(tasksTable).where(eq(tasksTable.userId, user.id));
+    const tasks = dbGetTasksFromUser(user.id);
 
     return tasks;
+}
+
+async function dbGetTasksFromUser(userId: string) {
+    return db.select().from(tasksTable).where(eq(tasksTable.userId, userId));
 }

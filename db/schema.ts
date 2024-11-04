@@ -1,7 +1,7 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 
 import pg from "pg";
-import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/node-postgres";
 
 const pool = new pg.Pool({
@@ -31,7 +31,7 @@ export const sessionTable = pgTable("session", {
 });
 
 export const tasksTable = pgTable("tasks", {
-    id: text("id").primaryKey().default("gen_random_uuid()"),
+    id: uuid("id").primaryKey().defaultRandom(),
     userId: text("user_id")
         .notNull()
         .references(() => userTable.id),
