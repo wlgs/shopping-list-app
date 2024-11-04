@@ -28,6 +28,8 @@ export default async function editTask({
         return { success: false, error: "User not validated" };
     }
 
+    // todo: add validation
+
     let err;
     await dbEditTask({ taskId, title, amount, amountType, imgUrl, dueDate, completedAt, userId: user.id }).catch(
         (error) => {
