@@ -10,7 +10,7 @@ interface DeleteTaskButtonProps {
 export default function DeleteTaskButton({ taskId }: DeleteTaskButtonProps) {
     return (
         <Button
-            variant="ghost"
+            variant={null}
             className=""
             onClick={async () => {
                 if (confirm("Are you sure you want to delete this task?")) {

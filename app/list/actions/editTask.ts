@@ -50,7 +50,7 @@ interface TaskEditData {
     title?: string;
     amount?: number;
     amountType?: string;
-    imgUrl?: string;
+    imgUrl?: string | null;
     dueDate?: Date;
     completedAt?: Date | null;
 }

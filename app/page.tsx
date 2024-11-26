@@ -1,7 +1,5 @@
 "use server";
 import { validateRequest } from "@/auth/validate-request";
-import Link from "next/link";
-import { LogoutButton } from "./(login)/login/components/logout-button";
 
 export default async function Home() {
     const { user } = await validateRequest();
