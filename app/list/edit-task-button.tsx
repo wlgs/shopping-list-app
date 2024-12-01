@@ -23,13 +23,15 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import editTask from "./actions/editTask";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface EditTaskButtonProps {
     task: TaskApi;
 }
 
 export function EditTaskButton({ task }: EditTaskButtonProps) {
+    const [isOpen, setIsOpen] = useState(false);
     const form = useForm<z.infer<typeof taskFormSchema>>({
         resolver: zodResolver(taskFormSchema),
     });
@@ -54,22 +56,24 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
             imgUrl: values.imgUrl?.length ? values.imgUrl : null,
             dueDate: values.dueDate,
         }).catch((error) => {
-            console.error("Error editing task", error);
+            toast.error(`Error editing task ${error.message}`);
         });
         if (!response) {
-            console.error("Error editing task");
+            toast.error(`Error editing task`);
             return;
         }
         if (!response.success) {
-            console.error("Error editing task", response.error);
+            toast.error(`Error editing task ${response.error}`);
             return;
         }
         form.reset();
+        toast.success("Task edited");
+        setIsOpen(false);
     }
 
     return (
         <>
-            <Sheet>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                     <Button variant={null}>
                         <Edit />

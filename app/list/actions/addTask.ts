@@ -5,6 +5,7 @@ import { tasksTable } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 
 interface TaskAddData {
+    listId?: string;
     title: string;
     amount: number;
     amountType: string;

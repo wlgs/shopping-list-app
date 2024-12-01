@@ -15,8 +15,9 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import addTask from "./actions/addTask";
 import { useState } from "react";
+import { toast } from "sonner";
 
-export default function AddNewTaskButton() {
+export default function AddNewTaskButton({ listId }: { listId?: string }) {
     const [isOpen, setIsOpen] = useState(false);
     const form = useForm<z.infer<typeof taskFormSchema>>({
         resolver: zodResolver(taskFormSchema),
@@ -31,22 +32,24 @@ export default function AddNewTaskButton() {
         const response = await addTask({
             title: values.title,
             amount: values.amount,
+            listId: listId,
             amountType: values.amountType,
             imgUrl: values.imgUrl?.length ? values.imgUrl : null,
             dueDate: values.dueDate,
         }).catch((error) => {
-            console.error("Error adding task", error);
+            toast.error(`Error adding task ${error.message}`);
         });
         if (!response) {
-            console.error("Error adding task");
+            toast.error(`Error adding task`);
             return;
         }
         if (!response.success) {
-            console.error("Error adding task", response.error);
+            toast.error(`Error adding task ${response.error}`);
             return;
         }
         form.reset();
         setIsOpen(false);
+        toast.success("Task added");
     }
     return (
         <>
@@ -61,6 +64,9 @@ export default function AddNewTaskButton() {
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                             <input type="hidden" value="not-needed-fake-id" {...form.register("id")} />
+                            {listId !== "default" && (
+                                <input type="hidden" value={listId} {...form.register("listId")} />
+                            )}
                             <FormField
                                 control={form.control}
                                 name="title"

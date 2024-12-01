@@ -1,9 +1,12 @@
 "use server";
 
+import { validateRequest } from "@/auth/validate-request";
+import { redirect } from "next/navigation";
+
 export default async function Home() {
-    return (
-        <>
-            <main className="container mx-auto lg:px-40"></main>
-        </>
-    );
+    const { user } = await validateRequest();
+    if (user) {
+        redirect("/list");
+    }
+    redirect("/login");
 }

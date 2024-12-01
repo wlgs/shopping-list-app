@@ -30,11 +30,25 @@ export const sessionTable = pgTable("session", {
     }).notNull(),
 });
 
+export const listsTable = pgTable("lists", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+        .notNull()
+        .references(() => userTable.id),
+    title: text("title").notNull(),
+    createdAt: timestamp("created_at", {
+        withTimezone: true,
+        mode: "date",
+    })
+        .defaultNow()
+        .notNull(),
+});
 export const tasksTable = pgTable("tasks", {
     id: uuid("id").primaryKey().defaultRandom(),
     userId: text("user_id")
         .notNull()
         .references(() => userTable.id),
+    listId: uuid("list_id").references(() => listsTable.id),
     title: text("title").notNull(),
     amount: integer("amount").notNull(),
     amountType: text("amount_type").notNull(),

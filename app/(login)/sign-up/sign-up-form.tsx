@@ -32,9 +32,9 @@ export default function SignUpForm() {
 
     return (
         <>
-            <p>Register</p>
+            <p data-testid="signup-text">Register</p>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form data-testid="signup-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
                         control={form.control}
                         name="login"
@@ -42,7 +42,7 @@ export default function SignUpForm() {
                             <FormItem>
                                 <FormLabel>Username</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input data-testid="signup-form-login" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -55,13 +55,15 @@ export default function SignUpForm() {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input type="password" {...field} />
+                                    <Input data-testid="signup-form-password" type="password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Register</Button>
+                    <Button data-testid="signup-form-submit" type="submit">
+                        Register
+                    </Button>
                     <p className="text-red-500">{form.formState.errors.root?.message}</p>
                 </form>
             </Form>

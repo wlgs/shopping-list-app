@@ -28,7 +28,8 @@
         "**/*.tsx",
         ".next/types/**/*.ts",
         "jest.config.js",
-        "app/list/actions/deleteTask"
+        "app/list/actions/deleteTask",
+        "jest.setup.js"
     ],
     "exclude": ["node_modules"]
 }

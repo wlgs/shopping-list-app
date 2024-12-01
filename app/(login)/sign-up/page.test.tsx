@@ -2,18 +2,19 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import Page from "./page";
 import { validateRequest } from "@/auth/validate-request";
 import { redirect } from "next/navigation";
+import { signup } from "./signup-action";
 
 jest.mock("next/navigation");
 
-jest.mock("./signin-action", () => ({
-    login: jest.fn().mockResolvedValue({ error: "invalid" }),
+jest.mock("./signup-action", () => ({
+    signup: jest.fn().mockResolvedValue({ error: "invalid" }),
 }));
 
 jest.mock("@/auth/validate-request", () => ({
     validateRequest: jest.fn().mockResolvedValue({ user: null }),
 }));
 
-describe("Login Page unauthenticated", () => {
+describe("Register page unauthenticated", () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -24,29 +25,29 @@ describe("Login Page unauthenticated", () => {
     });
 
     it("renders form correctly", () => {
-        expect(screen.getByTestId("signin-form")).toBeInTheDocument();
+        expect(screen.getByTestId("signup-form")).toBeInTheDocument();
     });
 
-    it("renders sign in text", () => {
-        expect(screen.getByTestId("signin-text")).toBeInTheDocument();
+    it("renders sign up text", () => {
+        expect(screen.getByTestId("signup-text")).toBeInTheDocument();
     });
 
     it("renders login input ", () => {
-        expect(screen.getByTestId("signin-form-login")).toBeInTheDocument();
+        expect(screen.getByTestId("signup-form-login")).toBeInTheDocument();
     });
     it("renders password input ", () => {
-        expect(screen.getByTestId("signin-form-password")).toBeInTheDocument();
+        expect(screen.getByTestId("signup-form-password")).toBeInTheDocument();
     });
     it("renders submit button", () => {
-        expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /Register/i })).toBeInTheDocument();
     });
-    it("calls login function on submit", async () => {
+    it("calls signup function on submit", async () => {
         const username = "username";
         const password = "password";
-        const loginInput = screen.getByTestId("signin-form-login") as HTMLInputElement;
-        const passwordInput = screen.getByTestId("signin-form-password") as HTMLInputElement;
-        const submitButton = screen.getByRole("button", { name: /sign in/i });
-        const form = screen.getByTestId("signin-form");
+        const loginInput = screen.getByTestId("signup-form-login") as HTMLInputElement;
+        const passwordInput = screen.getByTestId("signup-form-password") as HTMLInputElement;
+        const submitButton = screen.getByRole("button", { name: /register/i });
+        const form = screen.getByTestId("signup-form");
 
         act(() => {
             fireEvent.change(loginInput, { target: { value: username } });

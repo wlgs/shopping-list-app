@@ -35,45 +35,53 @@ jest.mock("next/navigation", () => ({
     redirect: jest.fn(),
 }));
 
-describe("login function", () => {
+describe("Login server action", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it("should return an error for invalid username", async () => {
-        const formData = new FormData();
-        formData.append("password", "validpassword");
+        const credentials = {
+            login: "invaliduserinvaliduserinvaliduserinvaliduserinvaliduserinvaliduserinvaliduser",
+            password: "validpassword",
+        };
 
-        const result = await login(formData);
+        const result = await login(credentials);
 
-        expect(result).toEqual({ error: "Invalid username" });
+        expect(result).toEqual({ error: "Invalid credentials" });
     });
 
     it("should return an error for invalid password", async () => {
-        const formData = new FormData();
-        formData.append("username", "validuser");
+        const credentials = {
+            login: "asd",
+            password: "invalidpasswordforexistinguser",
+        };
 
-        const result = await login(formData);
+        (verify as jest.Mock).mockResolvedValue(false);
 
-        expect(result).toEqual({ error: "Invalid password" });
+        const result = await login(credentials);
+
+        expect(result).toEqual({ error: "Incorrect username or password" });
     });
 
     it("should return an error for non-existent user", async () => {
-        const formData = new FormData();
-        formData.append("username", "nonexistentuser");
-        formData.append("password", "validpassword");
+        const credentials = {
+            login: "asd",
+            password: "invalidpasswordforexistinguser",
+        };
 
         (db.query.userTable.findFirst as jest.Mock).mockResolvedValue(null);
 
-        const result = await login(formData);
+        const result = await login(credentials);
 
         expect(result).toEqual({ error: "Incorrect username or password" });
     });
 
     it("should return an error for incorrect password", async () => {
-        const formData = new FormData();
-        formData.append("username", "existinguser");
-        formData.append("password", "incorrectpassword");
+        const credentials = {
+            login: "asd",
+            password: "invalidpasswordforexistinguser",
+        };
 
         (db.query.userTable.findFirst as jest.Mock).mockResolvedValue({
             id: "123",
@@ -82,15 +90,16 @@ describe("login function", () => {
         });
         (verify as jest.Mock).mockResolvedValue(false);
 
-        const result = await login(formData);
+        const result = await login(credentials);
 
         expect(result).toEqual({ error: "Incorrect username or password" });
     });
 
     it("should successfully log in and redirect for valid credentials", async () => {
-        const formData = new FormData();
-        formData.append("username", "validuser");
-        formData.append("password", "correctpassword");
+        const credentials = {
+            login: "validUser",
+            password: "validPassword",
+        };
 
         (db.query.userTable.findFirst as jest.Mock).mockResolvedValue({
             id: "123",
@@ -109,11 +118,11 @@ describe("login function", () => {
         };
         (cookies as jest.Mock).mockReturnValue(mockCookies);
 
-        await login(formData);
+        await login(credentials);
 
         expect(lucia.createSession).toHaveBeenCalledWith("123", {});
         expect(lucia.createSessionCookie).toHaveBeenCalledWith("session123");
         expect(mockCookies.set).toHaveBeenCalledWith("session_cookie", "cookie_value", { httpOnly: true });
-        expect(redirect).toHaveBeenCalledWith("/");
+        expect(redirect).toHaveBeenCalledWith("/list");
     });
 });

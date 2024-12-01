@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import deleteTask from "./actions/deleteTask";
 import { Trash } from "lucide-react";
+import deleteList from "./actions/deleteList";
+import { toast } from "sonner";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,30 +13,29 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
 
-interface DeleteTaskButtonProps {
-    taskId: string;
+interface DeleteListIdButtonProps {
+    listId: string;
 }
 
-export default function DeleteTaskButton({ taskId }: DeleteTaskButtonProps) {
+export default function DeleteListButton({ listId }: DeleteListIdButtonProps) {
     return (
         <AlertDialog>
             <AlertDialogTrigger>
-                <Trash size={16} />
+                <Trash className="mx-2" size={16} />
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Do you really want to delete this task?</AlertDialogTitle>
+                    <AlertDialogTitle>Do you really want to delete this list?</AlertDialogTitle>
                     <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                         onClick={async () => {
-                            const res = await deleteTask(taskId);
+                            const res = await deleteList(listId);
                             if (res.success) {
-                                toast.success("Task deleted");
+                                toast.success("List deleted");
                             } else {
                                 toast.error(res.error);
                             }
