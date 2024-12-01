@@ -137,9 +137,14 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Image url</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="https://example.com/image.jpg" {...field} />
-                                        </FormControl>
+                                        <div className="flex gap-2 items-center flex-row">
+                                            <FormControl>
+                                                <Input placeholder="https://example.com/image.jpg" {...field} />
+                                            </FormControl>
+                                            {field.value && (
+                                                <img src={field.value} alt="preview" className="w-48 h-27" />
+                                            )}
+                                        </div>
                                         <FormMessage />
                                     </FormItem>
                                 )}

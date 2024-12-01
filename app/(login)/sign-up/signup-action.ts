@@ -6,23 +6,22 @@ import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/db";
 import { userTable } from "@/db/schema";
+import { loginFormSchema } from "../login/login-schema";
+import { z } from "zod";
+import { eq } from "drizzle-orm";
 
-export async function signup(formData: FormData): Promise<ActionResult> {
-    const username = formData.get("username");
-    // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
-    // keep in mind some database (e.g. mysql) are case insensitive
-    if (typeof username !== "string") {
+type Credentials = z.infer<typeof loginFormSchema>;
+
+export async function signup(credentials: Credentials) {
+    const result = loginFormSchema.safeParse(credentials);
+    if (!result.success) {
         return {
-            error: "Invalid username",
+            error: "Invalid credentials",
         };
     }
-    const password = formData.get("password");
-    console.log(password, typeof password);
-    if (typeof password !== "string") {
-        return {
-            error: "Invalid password",
-        };
-    }
+
+    const username = result.data.login;
+    const password = result.data.password;
 
     const passwordHash = await hash(password, {
         // recommended minimum parameters
@@ -33,7 +32,15 @@ export async function signup(formData: FormData): Promise<ActionResult> {
     });
     const userId = generateIdFromEntropySize(10); // 16 characters long
 
-    // TODO: check if username is already used
+    const existingUser = await db.query.userTable.findFirst({
+        where: eq(userTable.username, username),
+    });
+    if (existingUser) {
+        return {
+            error: "Username already exists",
+        };
+    }
+
     await db.insert(userTable).values({
         id: userId,
         username: username,
@@ -43,9 +50,5 @@ export async function signup(formData: FormData): Promise<ActionResult> {
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-    return redirect("/");
-}
-
-interface ActionResult {
-    error: string;
+    return redirect("/list");
 }

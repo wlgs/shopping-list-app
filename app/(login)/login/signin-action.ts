@@ -6,20 +6,21 @@ import { verify } from "@node-rs/argon2";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { loginFormSchema } from "./login-schema";
+import { z } from "zod";
 
-export async function login(formData: FormData): Promise<ActionResult> {
-    const username = formData.get("username");
-    if (typeof username !== "string") {
+type Credentials = z.infer<typeof loginFormSchema>;
+
+export async function login(credentials: Credentials) {
+    const result = loginFormSchema.safeParse(credentials);
+    if (!result.success) {
         return {
-            error: "Invalid username",
+            error: "Invalid credentials",
         };
     }
-    const password = formData.get("password");
-    if (typeof password !== "string") {
-        return {
-            error: "Invalid password",
-        };
-    }
+
+    const username = result.data.login;
+    const password = result.data.password;
 
     const existingUser = await db.query.userTable.findFirst({
         where: eq(userTable.username, username),
@@ -45,9 +46,5 @@ export async function login(formData: FormData): Promise<ActionResult> {
     const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-    return redirect("/");
-}
-
-interface ActionResult {
-    error: string;
+    return redirect("/list");
 }

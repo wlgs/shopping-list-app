@@ -1,25 +1,17 @@
-"use client";
-
-import { login } from "./signin-action";
+import SignInForm from "./sign-in-form";
+import { validateRequest } from "@/auth/validate-request";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
+    const { user } = await validateRequest();
+    if (user) {
+        redirect("/list");
+    }
     return (
         <>
-            <h1>Sign in</h1>
-            <form
-                data-testid="login-form"
-                action={(formData) => {
-                    login(formData);
-                }}
-            >
-                <label htmlFor="username">Username</label>
-                <input name="username" id="username" />
-                <br />
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" />
-                <br />
-                <button type="submit">Continue</button>
-            </form>
+            <main className="container mx-auto lg:px-40">
+                <SignInForm />
+            </main>
         </>
     );
 }

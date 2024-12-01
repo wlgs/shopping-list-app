@@ -40,7 +40,8 @@
         "server-only": "^0.0.1",
         "tailwind-merge": "^2.5.4",
         "tailwindcss-animate": "^1.0.7",
-        "zod": "^3.23.8"
+        "zod": "^3.23.8",
+        "zustand": "^5.0.1"
     },
     "devDependencies": {
         "@node-rs/argon2": "^2.0.0",

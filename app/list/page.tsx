@@ -6,6 +6,7 @@ import { EditTaskButton } from "./edit-task-button";
 import { cn } from "@/lib/utils";
 import AddNewTaskButton from "./add-new-task-button";
 import { DoneTaskButton } from "./done-task-button";
+import Image from "next/image";
 
 function isInPast(date: Date) {
     let comparDate = date;
@@ -37,11 +38,13 @@ export default async function Page() {
                         )}
                     >
                         <DoneTaskButton taskId={task.id} completed={!!task.completedAt} />
+                        {task.imgUrl && (
+                            <img className="self-center" src={task.imgUrl} alt={task.title} width={50} height={50} />
+                        )}
                         <h2 className="font-bold text-xl">{task.title}</h2>
                         <p>
                             {task.amount} {task.amountType}
                         </p>
-                        {task.imgUrl && <img src={task.imgUrl} alt={task.title} />}
                         <div className="ml-auto flex flex-row items-center">
                             <p className={cn(isInPast(task.dueDate) && !task.completedAt && "text-red-500")}>
                                 {new Date(task.dueDate).toLocaleString(undefined, {

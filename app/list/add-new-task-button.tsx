@@ -1,20 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-    SheetTrigger,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetClose,
-    SheetFooter,
-    Sheet,
-} from "@/components/ui/sheet";
+import { SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetFooter, Sheet } from "@/components/ui/sheet";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { taskFormSchema } from "./task-schema";
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from "@/components/ui/form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -36,7 +28,6 @@ export default function AddNewTaskButton() {
     });
 
     async function onSubmit(values: z.infer<typeof taskFormSchema>) {
-        console.log("values", values);
         const response = await addTask({
             title: values.title,
             amount: values.amount,
