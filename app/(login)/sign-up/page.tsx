@@ -9,7 +9,7 @@ export default async function Page() {
     }
     return (
         <>
-            <main className="container mx-auto lg:px-40">
+            <main className="container mx-auto lg:px-40 px-4">
                 <SignUpForm />
             </main>
         </>

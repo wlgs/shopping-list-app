@@ -75,7 +75,7 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
         <>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                    <Button variant={null}>
+                    <Button variant={null} data-testid="edit-task-button">
                         <Edit />
                     </Button>
                 </SheetTrigger>
@@ -93,7 +93,7 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
                                     <FormItem>
                                         <FormLabel>Name</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="item" {...field} />
+                                            <Input data-testid="title-input" placeholder="item" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -106,7 +106,12 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
                                     <FormItem>
                                         <FormLabel>Amount</FormLabel>
                                         <FormControl>
-                                            <Input type="number" placeholder="1" {...field} />
+                                            <Input
+                                                data-testid="amount-input"
+                                                type="number"
+                                                placeholder="1"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -143,7 +148,11 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
                                         <FormLabel>Image url</FormLabel>
                                         <div className="flex gap-2 items-center flex-row">
                                             <FormControl>
-                                                <Input placeholder="https://example.com/image.jpg" {...field} />
+                                                <Input
+                                                    data-testid="image-input"
+                                                    placeholder="https://example.com/image.jpg"
+                                                    {...field}
+                                                />
                                             </FormControl>
                                             {field.value && (
                                                 <img src={field.value} alt="preview" className="w-48 h-27" />
@@ -193,7 +202,9 @@ export function EditTaskButton({ task }: EditTaskButtonProps) {
                             />
                             <SheetFooter>
                                 <SheetClose asChild>
-                                    <Button type="submit">Save changes</Button>
+                                    <Button data-testid="submit-task-data" type="submit">
+                                        Save changes
+                                    </Button>
                                 </SheetClose>
                             </SheetFooter>
                         </form>

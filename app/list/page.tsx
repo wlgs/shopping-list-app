@@ -29,7 +29,7 @@ export default async function Page() {
     const tasks = await getTasks();
     const lists = Object.keys(tasks);
     return (
-        <main className="container mx-auto lg:px-40 pb-80">
+        <main className="container mx-auto lg:px-40 pb-80 px-4">
             {lists.map((listId) => {
                 return (
                     <div key={listId} className="mb-8">

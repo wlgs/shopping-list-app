@@ -32,7 +32,7 @@ export default function RootLayout({
                 <ThemeProvider attribute="class" enableSystem defaultTheme="system">
                     <Navbar />
                     <div className="mt-[58px]">{children}</div>
-                    <Toaster richColors />
+                    <Toaster richColors position="bottom-center" />
                 </ThemeProvider>
             </body>
         </html>

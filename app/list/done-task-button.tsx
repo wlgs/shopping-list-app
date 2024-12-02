@@ -15,6 +15,7 @@ export function DoneTaskButton({ taskId, completed }: DoneTaskButtonProps) {
     return (
         <>
             <Button
+                data-testid="complete-task-button"
                 onClick={() => {
                     startTransition(() => {
                         completed ? editUncompleteTask(taskId) : editCompleteTask(taskId);

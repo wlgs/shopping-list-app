@@ -4,11 +4,11 @@ import { SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetFooter, Sheet
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { listFormSchema, taskFormSchema } from "./task-schema";
+import { listFormSchema } from "./task-schema";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import addList from "./actions/addList";
+import { addList } from "./actions/addList";
 import { toast } from "sonner";
 
 export default function AddNewListButton() {

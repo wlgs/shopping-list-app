@@ -22,8 +22,10 @@ interface DeleteTaskButtonProps {
 export default function DeleteTaskButton({ taskId }: DeleteTaskButtonProps) {
     return (
         <AlertDialog>
-            <AlertDialogTrigger>
-                <Trash size={16} />
+            <AlertDialogTrigger asChild>
+                <Button variant={null} className="px-0" data-testid="delete-task-button">
+                    <Trash className="mx-2" size={16} aria-description="delete task" />
+                </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

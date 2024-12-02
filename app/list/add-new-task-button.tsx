@@ -74,7 +74,7 @@ export default function AddNewTaskButton({ listId }: { listId?: string }) {
                                     <FormItem>
                                         <FormLabel>Name</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Item name" {...field} />
+                                            <Input data-testid="title-input" placeholder="Item name" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -87,7 +87,12 @@ export default function AddNewTaskButton({ listId }: { listId?: string }) {
                                     <FormItem>
                                         <FormLabel>Amount</FormLabel>
                                         <FormControl>
-                                            <Input type="number" placeholder="1" {...field} />
+                                            <Input
+                                                type="number"
+                                                data-testid="amount-input"
+                                                placeholder="1"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -123,7 +128,11 @@ export default function AddNewTaskButton({ listId }: { listId?: string }) {
                                     <FormItem>
                                         <FormLabel>Image url</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="https://example.com/image.jpg" {...field} />
+                                            <Input
+                                                data-testid="image-input"
+                                                placeholder="https://example.com/image.jpg"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -168,7 +177,9 @@ export default function AddNewTaskButton({ listId }: { listId?: string }) {
                                 )}
                             />
                             <SheetFooter>
-                                <Button type="submit">Add new item</Button>
+                                <Button data-testid="submit-task-data" type="submit">
+                                    Add new item
+                                </Button>
                             </SheetFooter>
                         </form>
                     </Form>

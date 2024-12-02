@@ -2,6 +2,7 @@
 import { Trash } from "lucide-react";
 import deleteList from "./actions/deleteList";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -21,8 +22,10 @@ interface DeleteListIdButtonProps {
 export default function DeleteListButton({ listId }: DeleteListIdButtonProps) {
     return (
         <AlertDialog>
-            <AlertDialogTrigger>
-                <Trash className="mx-2" size={16} />
+            <AlertDialogTrigger asChild>
+                <Button variant={null} className="px-0" data-testid="delete-list-button">
+                    <Trash className="mx-2" size={16} aria-description="delete task" />
+                </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
