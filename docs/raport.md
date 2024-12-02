@@ -14,10 +14,10 @@ Wszystko na Node `version 20.12.1`
 
 Przykładowe pliki:
 
-- [test e2e](/e2e/list/list.spec.ts)
 - [test pojedynczego komponentu](/app/(login)/login/page.test.tsx)
 - [test api](/app/api/logout/route.test.ts)
 - [test server action](/app/list/actions/editTask.test.ts)
+- [test e2e](/e2e/list/list.spec.ts)
 
 ## 1. Testy jednostkowe
 
