@@ -15,7 +15,3 @@ https://github.com/user-attachments/assets/be5467b9-eef4-4aad-8bfa-814b2aba4fbf
 - Made with Claude 3.5 sonnet prompting alongside v0.
 - Total time spent: `4h`
 - Final grade: `4.0`
-
-
-
-
