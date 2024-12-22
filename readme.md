@@ -8,7 +8,8 @@ Final raport located in [raport.md](./docs/raport.md)
 
 ## Demo
 
-https://github.com/wlgs/shopping-list-app/raw/refs/heads/main/docs/demo.webm.mp4
+
+[!(demo)](https://github.com/wlgs/shopping-list-app/raw/refs/heads/main/docs/demo.webm.mp4)
 
 ## Statistics
 
